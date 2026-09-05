@@ -1,0 +1,36 @@
+
+services:
+  expense-tracker:
+    build:
+      context: .
+      args:
+        - NODE_ENV=development
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      - NODE_ENV=development
+      - DEV_MONGO_USER=root
+      - DEV_MONGO_PASSWORD=root
+      - DEV_MONGO_CONTAINER_IP=mongo
+      - DEV_MONGO_CONTAINER_PORT=27017 
+
+    volumes:
+      - ./:/app
+      - /app/node_modules
+
+    command: npm run dev  
+
+  mongo:
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

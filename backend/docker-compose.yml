@@ -1,0 +1,16 @@
+
+services:
+  expense-tracker:
+    build:
+      context: .
+      args:
+        - NODE_ENV=production
+
+    ports:
+      - "8000:8000"
+    
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - MONGODB_URI=${MONGODB_URI} 
+
+    command: npm start  

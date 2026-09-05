@@ -1,0 +1,9 @@
+#these files/folders will be ignored by docker and they will not be copied inside the container file system, due to volumes
+# in development enviroment, these files will be copied to conatiner even if they are getting added into dockerignore file
+# but in production enviroment, these files will not be copied to container.
+node_modules/
+.git/
+.dockerignore
+.env*
+docker-compose*
+Dockerfile*

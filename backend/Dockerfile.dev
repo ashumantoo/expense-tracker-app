@@ -1,0 +1,28 @@
+#################################################### IMPORTANT NOTES ####################################################
+# This file was created to build the image and run the container in development mode
+# But with the use of docker-compose files, the development and production level setting has been handled with the
+# help of docker-compose.development.yml and docker-comopose.yml(for production) files separately
+# We will use the main Dockerfile to define all command and will override those command individually as per enviroment
+# if needed inside the docker compose files.
+########################################################################################################################
+
+# specify the node base image with your desired version node:<version>
+FROM node:24
+
+#WORKING DIRECTORY OF CONTAINER
+WORKDIR /app
+
+#COPY package.json file to current working directory in container which is /app
+COPY package.json .
+
+#Install all npm packages
+RUN npm install
+
+#COPY all the files and folder from current working directory to the container current working directory
+COPY . ./
+
+# Expose the application port
+EXPOSE 8000
+
+#COMMAND to run the app in development mode
+CMD ["npm","run","dev"]
