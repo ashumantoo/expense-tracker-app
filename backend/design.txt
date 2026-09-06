@@ -2,8 +2,32 @@ https://www.hostinger.com/tutorials/create-budget-tracking-web-app/
 
 Module
   1. Auth
+      - UserModel: firstName, lastName, email, Password, profileImageUrl, timestamp, status, isEmailVerified
+      - Session based authentication
+      - Singup api
+      - Login api
+      - getProfile api
+      - otp verification
+      - password reset api
+      - google login
+
   2. Dashboard
-  3. Transactions
-  4. budget
-  5. Savings
-  6. Reports
+      - Api to fetch the dashboard data
+      - Show cards and graph, bar and pie chart
+
+  3. Category
+      - Category Model: id, name
+      - CRUD APIS   
+
+   5. budget
+      - budget Model: id, categoryId, amount
+      - CRUD APIS
+
+  4. Transactions
+      - Transactions Model: id, transactionDateTime, amount, categoryId, budgetId, type, note, description, documents, timestamp
+      - CRUD APIS
+
+  6. Savings
+
+  7. Reports
+

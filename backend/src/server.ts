@@ -1,6 +1,10 @@
-import express, { type Application } from 'express'
+import express, { type Application, type Request, type Response, type NextFunction } from 'express'
 import env from 'dotenv';
 import mongoose from 'mongoose';
+import cors from 'cors'
+import morgan from 'morgan'
+import cookieSession from 'cookie-session';
+import userAuthRouter from './routes/user.routes.ts';
 
 const app: Application = express()
 
@@ -22,26 +26,54 @@ const MONGO_PORT = process.env.DEV_MONGO_CONTAINER_PORT;
       console.log("Development Database is connected.")
     }
   } catch (error) {
-    console.log(">>>>>>>>>>>>--------",process.env.NODE_ENV, process.env.MONGODB_URI)
     throw error;
   }
 })()
 
 
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
+app.use(cors());
+
+app.use(morgan('combined'));
+
+
+//This cookieSession reuires no data saving at server side. to save the data at server side use express-session instead of cookieSession
+// for more details read https://expressjs.com/en/resources/middleware/cookie-session/
+app.use(
+  cookieSession({
+    name: "session",
+    secret: process.env.DEV_SESSION_SECRET,
+    maxAge: 24 * 60 * 60 * 100, // 24hr in milliseconds,
+    httpOnly: true,
+    sameSite: 'lax'
+  })
+)
 
 
 app.get('/health', (req, res) => {
   try {
     res.json({
-      success:true,
-      message:"Backend api healthy and running."
+      success: true,
+      message: "Backend api healthy and running."
     })
   } catch (error) {
     throw error;
   }
 })
 
+//Routes
+app.use('/api/v1/users', userAuthRouter)
+
+//error handler at the app level
+app.use((err: Error, req: Request, res: Response) => {
+  res.status(500).json({
+    message: err.message,
+    error: err
+  });
+})
 
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`)
