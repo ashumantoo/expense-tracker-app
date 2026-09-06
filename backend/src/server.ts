@@ -21,8 +21,9 @@ const MONGO_PORT = process.env.DEV_MONGO_CONTAINER_PORT;
       await mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`)
       console.log("Development Database is connected.")
     }
-  } catch (err) {
-    throw new Error("Missing database env variables!")
+  } catch (error) {
+    console.log(">>>>>>>>>>>>--------",process.env.NODE_ENV, process.env.MONGODB_URI)
+    throw error;
   }
 })()
 
