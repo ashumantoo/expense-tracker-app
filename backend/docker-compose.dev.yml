@@ -15,6 +15,7 @@ services:
       - DEV_MONGO_PASSWORD=root
       - DEV_MONGO_CONTAINER_IP=mongo
       - DEV_MONGO_CONTAINER_PORT=27017 
+      - DEV_SESSION_SECRET=somerandomvalue
 
     volumes:
       - ./:/app
