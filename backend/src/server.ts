@@ -30,14 +30,16 @@ const MONGO_PORT = process.env.DEV_MONGO_CONTAINER_PORT;
 app.use(express.json())
 
 
-app.get('/', (req, res) => {
-  return res.json({
-    success: true,
-    message: "Connected to db Home route is working."
-  })
+app.get('/health', (req, res) => {
+  try {
+    res.json({
+      success:true,
+      message:"Backend api healthy and running."
+    })
+  } catch (error) {
+    throw error;
+  }
 })
-
-
 
 
 app.listen(PORT, () => {
