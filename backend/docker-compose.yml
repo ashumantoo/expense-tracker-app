@@ -12,3 +12,4 @@ services:
     environment:
       - NODE_ENV=production
       - MONGODB_URI=${MONGODB_URI}
+      - DEV_SESSION_SECRET=${DEV_SESSION_SECRET}
