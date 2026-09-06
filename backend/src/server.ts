@@ -52,6 +52,17 @@ app.use(
   })
 )
 
+app.get('/', (req, res) => {
+  try {
+    res.status(200).send(`
+      <div style="text-align: center; margin-top:20px; font-weight: bold;">
+       </h3>Welcome, Expense Tracker Backend APIs</h3>
+      </div>  
+      `)
+  } catch (error) {
+    throw error;
+  }
+})
 
 app.get('/health', (req, res) => {
   try {
