@@ -1,0 +1,9 @@
+https://www.hostinger.com/tutorials/create-budget-tracking-web-app/
+
+Module
+  1. Auth
+  2. Dashboard
+  3. Transactions
+  4. budget
+  5. Savings
+  6. Reports
