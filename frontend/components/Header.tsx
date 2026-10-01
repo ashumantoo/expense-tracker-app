@@ -3,6 +3,7 @@
 import { useAuth } from "@/app/context/AuthContext";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { getCookie, deleteCookie } from 'cookies-next/client'
 
 export default function Header() {
   const pathname = usePathname();
@@ -14,18 +15,21 @@ export default function Header() {
   const isSignupActive = pathname === "/signup";
 
   const logout = async () => {
-    const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/users/logout`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      credentials: "include" // <--Tells the browser to accept and save the incoming cookie
-    })
+    // const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/users/logout`, {
+    //   method: "POST",
+    //   headers: { "Content-type": "application/json" },
+    //   credentials: "include" // <--Tells the browser to accept and save the incoming cookie
+    // })
 
-    const data = await apiResponse.json()
-    if (data.success) {
-      router.push('/login')
-    } else {
-      alert(data.message)
-    }
+    // const data = await apiResponse.json()
+    // if (data.success) {
+    //   router.push('/login')
+    // } else {
+    //   alert(data.message)
+    // }
+    deleteCookie('auth_token')
+    router.refresh()
+    router.push('/login')
   };
 
   return (

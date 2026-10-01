@@ -48,20 +48,20 @@ app.use(cors({
 
 app.use(morgan('combined'));
 
-//This cookieSession reuires no data saving at server side. to save the data at server side use express-session instead of cookieSession
-// for more details read https://expressjs.com/en/resources/middleware/cookie-session/
-app.use(
-  cookieSession({
-    name: "session",
-    secret: process.env.DEV_SESSION_SECRET,
-    maxAge: 24 * 60 * 60 * 1000, // 24hr in milliseconds,
-    httpOnly: true,
-    // For localhost cross-origin development, browsers allow 'lax' if CORS handles credentials.
-    // In Production (HTTPS), cross-domain cookies strictly require 'none' and secure: true.
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    secure: process.env.NODE_ENV === 'production' ? true : false, // Must be true in production (requires HTTPS)
-  })
-)
+// //This cookieSession reuires no data saving at server side. to save the data at server side use express-session instead of cookieSession
+// // for more details read https://expressjs.com/en/resources/middleware/cookie-session/
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     secret: process.env.DEV_SESSION_SECRET,
+//     maxAge: 24 * 60 * 60 * 1000, // 24hr in milliseconds,
+//     httpOnly: true,
+//     // For localhost cross-origin development, browsers allow 'lax' if CORS handles credentials.
+//     // In Production (HTTPS), cross-domain cookies strictly require 'none' and secure: true.
+//     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+//     secure: process.env.NODE_ENV === 'production' ? true : false, // Must be true in production (requires HTTPS)
+//   })
+// )
 
 app.get('/', (req, res) => {
   try {

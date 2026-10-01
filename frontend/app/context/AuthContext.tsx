@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import { getCookie } from 'cookies-next/client'
 
 const AuthContext = createContext({ user: { email: "" }, loading: true })
 
@@ -14,10 +15,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     async function checkAuth() {
       try {
+        const token = getCookie('auth_token') as string
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/users/me`, {
           method: "GET",
-          headers: { "Content-type": "application/json" },
-          credentials: "include" // <--Tells the browser to accept and save the incoming cookie
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            "Content-type": "application/json"
+          },
         }
         )
         if (res.ok) {
