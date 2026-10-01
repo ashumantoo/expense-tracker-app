@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { setCookie } from 'cookies-next/client'
 import { ChangeEvent, SubmitEvent, SubmitEventHandler, useState } from "react";
 
 export default function LoginPage() {
@@ -20,11 +21,20 @@ export default function LoginPage() {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(loginData),
-        credentials: "include" // <--Tells the browser to accept and save the incoming cookie
       })
 
       const data = await apiResponse.json()
+
       if (data.success) {
+        // Save the JWT locally on the Next.js domain so the middleware can read it
+        setCookie('auth_token', data.token, {
+          maxAge: 60 * 60 * 1, // 1 hours matches your Express window
+          path: '/',
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax'
+        })
+
+        router.refresh()
         router.push('/dashboard')
       } else {
         alert(data.message)
